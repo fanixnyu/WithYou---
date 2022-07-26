@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("eduvod/video")
 public class VodController {
@@ -43,5 +45,18 @@ public class VodController {
           e.printStackTrace();
           throw new GuliException(20001,"删除视频失败");
       }
+    }
+
+    /**
+     * 批量删除
+     * 用list集合 进行传递
+     * @param videoIdList
+     * @RequestParam("") 里面参数不加也可以
+     * @return
+     */
+    @DeleteMapping("deleteBatch")
+    public R deleteBatch(@RequestParam("videoIdList")List videoIdList){
+        vodService.removeMoreAliyVideo(videoIdList);
+        return R.ok();
     }
 }
