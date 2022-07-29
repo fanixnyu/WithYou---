@@ -12,43 +12,5 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>service-ucenter</artifactId>
 
-    <organization>
-        <name>Example Company</name>
-        <url>http://www.example.com/</url>
-    </organization>
-
-    <name>service-ucenter</name>
-    <description>This is the com.atguigu:service-ucenter plugin for Atlassian Bamboo.</description>
-    <packaging>atlassian-plugin</packaging>
-
-
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-bamboo-plugin</artifactId>
-                <version>3.0.1</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <productVersion>${bamboo.version}</productVersion>
-                    <productDataVersion>${bamboo.data.version}</productDataVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <properties>
-        <bamboo.version>2.3.1</bamboo.version>
-        <bamboo.data.version>2.2</bamboo.data.version>
-    </properties>
 
 </project>
