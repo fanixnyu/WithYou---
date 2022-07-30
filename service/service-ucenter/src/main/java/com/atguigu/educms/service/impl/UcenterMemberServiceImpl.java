@@ -98,4 +98,17 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         ucenterMember.setAvatar("http:liuzhichao520.top/log/90.jpg");
         baseMapper.insert(ucenterMember);
     }
+
+
+
+
+
+//    微信登录接口实现
+    @Override
+    public UcenterMember getOpenIdMember(String openid) {
+        QueryWrapper<UcenterMember> queryWrapper =new QueryWrapper<>();
+        queryWrapper.eq("openid",openid);
+        UcenterMember member =baseMapper.selectOne(queryWrapper);
+        return member;
+    }
 }

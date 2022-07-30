@@ -16,4 +16,8 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     String login(UcenterMember ucenterMember);
 
     void register(RegisterVo registerVo);
+
+
+//    微信扫码登录接口
+    UcenterMember getOpenIdMember(String openid);
 }
