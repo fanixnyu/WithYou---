@@ -1,6 +1,9 @@
 package com.atguigu.eduservice.service.impl;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
+import com.atguigu.eduservice.entity.EduTeacher;
+import com.atguigu.eduservice.entity.frontvo.CourseFrontVo;
+import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.mapper.EduCourseMapper;
@@ -10,12 +13,17 @@ import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.eduservice.service.EduVideoService;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
@@ -118,4 +126,62 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw new GuliException(20001,"删除失败");
         }
     }
+
+
+//    条件查询带分页查询课程
+    @Override
+    public Map<String, Object> getCourseFrontList(Page<EduCourse> pageEduCourse, CourseFrontVo courseFrontVo) {
+
+        QueryWrapper<EduCourse> queryWrapper =new QueryWrapper<>();
+        if (!StringUtils.isEmpty(courseFrontVo.getSubjectParentId())){//一级分类
+            queryWrapper.eq("subject_parent_id",courseFrontVo.getSubjectId());
+        }
+
+        if (!StringUtils.isEmpty(courseFrontVo.getSubjectId())){//二级分类
+            queryWrapper.eq("subject_id",courseFrontVo.getSubjectId());
+        }
+
+        if (!StringUtils.isEmpty(courseFrontVo.getBuyCountSort())){//关注度
+            queryWrapper.orderByDesc("buy_count");
+        }
+
+        if (!StringUtils.isEmpty(courseFrontVo.getGmtCreateSort())){//最新时间
+                queryWrapper.orderByDesc("gmt_create");
+        }
+
+        if (!StringUtils.isEmpty(courseFrontVo.getPriceSort())){//价格
+            queryWrapper.orderByDesc("price");
+        }
+
+        baseMapper.selectPage(pageEduCourse,queryWrapper);
+
+        List<EduCourse> records = pageEduCourse.getRecords();
+        long pages = pageEduCourse.getPages();
+        long size = pageEduCourse.getSize();
+        long total = pageEduCourse.getTotal();
+        long pagePages = pageEduCourse.getPages();
+        long current = pageEduCourse.getCurrent();
+        boolean hasNext = pageEduCourse.hasNext();//下一页
+        boolean hasPrevious = pageEduCourse.hasPrevious();//上一页
+//        用map做个接受返回
+        Map<String,Object> map =new HashMap<>();
+        map.put("records",records);
+        map.put("pages",pages);
+        map.put("size",size);
+        map.put("total",total);
+        map.put("pagePages",pagePages);
+        map.put("current",current);
+        map.put("hasNext",hasNext);
+        map.put("hasPrevious",hasPrevious);
+        return map;
+    }
+
+
+//    根据课程id,编写sql语句查询课程信息
+
+    @Override
+    public CourseWebVo getBaseCourseInfo(String courseId) {
+        return baseMapper.getBaseCourseInfo(courseId);
+    }
 }
+
