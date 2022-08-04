@@ -19,6 +19,8 @@
         <module>service-acl</module>
         <module>service-msm</module>
         <module>service-ucenter</module>
+        <module>service_order</module>
+        <module>service_statistics</module>
     </modules>
 
     <properties>
@@ -27,7 +29,6 @@
     </properties>
 
     <dependencies>
-
 <!--&lt;!&ndash;  服务注册&ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba.cloud</groupId>-->
@@ -35,7 +36,12 @@
 <!--            <version>2.2.0.RELEASE</version>-->
 <!--        </dependency>-->
 
-<!--&lt;!&ndash;        服务调用&ndash;&gt;-->
+<!--        <dependency>-->
+<!--        <groupId>com.alibaba.cloud</groupId>-->
+<!--        <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+<!--    </dependency>-->
+
+<!--        服务调用-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
